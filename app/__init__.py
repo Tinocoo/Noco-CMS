@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_migrate import Migrate
+from flask_babelex import Babel
 import importlib
 import os
 from app.admin import admin
@@ -22,6 +23,7 @@ def create_app():
 
     Migrate(app=app, db=db)
     admin.init_app(app)
+    Babel(app)
 
 
     mod = importlib.import_module('.'.join(conf.split('.')[:-1]))

@@ -13,16 +13,18 @@ class DevelopmentConfig(BaseConfig):
     TESTING = True
     SQLALCHEMY_DATABASE_URI = 'mysql+mysqlconnector://root:root@127.0.0.1/flaskadmin'
     FLASK_ADMIN_SWATCH = 'flatly'
-    VERSIONS = 1
+    BABEL_DEFAULT_LOCALE = 'pt_BR'
+    BABEL_DEFAULT_TIMEZONE = 'America/Sao_Paulo'
     MODULES = [
         'login'
     ]
 
 class ProductionConfig(BaseConfig):
     ENV = 'production'
-    SQLALCHEMY_DATABASE_URI = 'mysql+mysqlconnector://root:sqladmin@10.0.0.92/crm'
+    SQLALCHEMY_DATABASE_URI = 'mysql+mysqlconnector://root:root@127.0.0.1/flaskadmin'
     FLASK_ADMIN_SWATCH = 'flatly'
-    VERSIONS = 1
+    BABEL_DEFAULT_LOCALE = 'pt_BR'
+    BABEL_DEFAULT_TIMEZONE = 'America/Sao_Paulo'
     MODULES = [
         'login'
     ]

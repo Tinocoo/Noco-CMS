@@ -6,14 +6,13 @@ from app.models import db
 
 
 
-class Users(db.Model):
+class Media(db.Model):
 
-    __tablename__ = 'users'
+    __tablename__ = 'medias'
 
     id = Column(Integer, primary_key=True, nullable=False, unique=True)
-    name = Column(String(60), nullable=False, unique=False)
-    email = Column(String(150), nullable=False, unique=True)
-    password = Column(String(255), nullable=False, unique=False)
+    description = Column(String(60), nullable=False, unique=False)
+    url = Column(String(255), nullable=False, unique=False)
     created_at = Column(DateTime, nullable=False, default=datetime.now())
     updated_at = Column(DateTime, nullable=False, default=datetime.now(), onupdate=datetime.now())
     status = Column(SmallInteger, nullable=False, unique=False, default=1)
@@ -22,4 +21,3 @@ class Users(db.Model):
     @property
     def serialize(self):
         return {c: getattr(self, c) for c in inspect(self).attrs.keys()}
-        

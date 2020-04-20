@@ -1,27 +1,14 @@
-from datetime import date
 from flask_admin.contrib.sqla import ModelView
-from wtforms.fields import PasswordField, SelectField
-from werkzeug.security import generate_password_hash
+from wtforms.fields import SelectField
 
 
-
-class UserView(ModelView):
+class CategoryView(ModelView):
     
     # Tela de edição em modal
     edit_modal = True
 
     # Edição através da grid
-    column_editable_list = ['name']
-    
-    # Colunas excluídas da grid
-    column_exclude_list = [
-        'password'
-    ]
-    
-    # Campos da grid utilizado para pesquisa
-    column_searchable_list = [
-        'email'
-    ]
+    column_editable_list = ['description']
 
     # Substiuição de texto da grid
     column_choices = {
@@ -30,16 +17,9 @@ class UserView(ModelView):
             (1, 'Habilitado'),
         ]
     }
-    
-    # Campos utilizados para filtros avançados
-    column_filters = [
-        'name',
-        'email'
-    ]
-    
+
     column_labels = {
-        'name': 'Nome',
-        'email': 'E-mail',
+        'description': 'Descrição',
         'created_at': 'Criação',
         'updated_at': 'Atualização'
     }
@@ -49,24 +29,18 @@ class UserView(ModelView):
         'updated_at': lambda v, c, m, p: m.created_at.strftime('%d/%m/%Y %H:%M:%S')
     }
 
+    column_exclude_list = ['post']
+    
     # Campos que serão apresentados na tela de cadastro
     form_create_rules = [
-        'name',
-        'email',
-        'password',
+        'description'
     ]
-    
+
     # Campos que serão apresentados na tela de edição
     form_edit_rules = [
-        'name',
-        'email',
+        'description',
         'status'
     ]
-    
-    # Fields personalizados no formulário
-    form_extra_fields = {
-        'password': PasswordField("Senha")
-    }
 
     form_overrides = {
         'status': SelectField
@@ -81,8 +55,3 @@ class UserView(ModelView):
             coerce=int
         )
     }
-
-    def on_model_change(self, form, model, is_created):
-        if is_created:
-            model.password = generate_password_hash(form.password.data)
-    
