@@ -3,7 +3,7 @@ from wtforms.fields import SelectField
 from .CKTextArea import CKTextAreaField
 
 
-class PostView(ModelView):
+class PagesView(ModelView):
     
     extra_js = ['//cdn.ckeditor.com/4.6.0/standard/ckeditor.js']
 
@@ -11,12 +11,10 @@ class PostView(ModelView):
     column_editable_list = ['title']
 
     # Colunas excluídas da grid
-    column_exclude_list = ['description']
+    column_exclude_list = ['body']
 
     # Campos da grid utilizado para pesquisa
-    column_searchable_list = [
-        'title'
-    ]
+    column_searchable_list = ['title']
 
     # Substiuição de texto da grid
     column_choices = {
@@ -29,7 +27,8 @@ class PostView(ModelView):
     # Campos utilizados para filtros avançados
     column_filters = [
         'title',
-        'created_at'
+        'created_at',
+        'status'
     ]
 
     column_labels = {
@@ -41,23 +40,19 @@ class PostView(ModelView):
     # Campos que serão apresentados na tela de cadastro
     form_create_rules = [
         'title',
-        'thumbnail',
-        'description',
-        'categories',
+        'body'
     ]
 
     # Campos que serão apresentados na tela de edição
     form_edit_rules = [
         'title',
-        'thumbnail',
-        'description',
-        'categories',
+        'body',
         'status'
     ]
 
 
     form_overrides = {
-        'description': CKTextAreaField,
+        'body': CKTextAreaField,
         'status': SelectField
     }
 
@@ -70,3 +65,4 @@ class PostView(ModelView):
             coerce=int
         )
     }
+

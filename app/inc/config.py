@@ -16,7 +16,8 @@ class DevelopmentConfig(BaseConfig):
     BABEL_DEFAULT_LOCALE = 'pt_BR'
     BABEL_DEFAULT_TIMEZONE = 'America/Sao_Paulo'
     MODULES = [
-        'login'
+        'login',
+        'page'
     ]
 
 class ProductionConfig(BaseConfig):
@@ -26,5 +27,6 @@ class ProductionConfig(BaseConfig):
     BABEL_DEFAULT_LOCALE = 'pt_BR'
     BABEL_DEFAULT_TIMEZONE = 'America/Sao_Paulo'
     MODULES = [
-        'login'
+        'login',
+        'page'
     ]

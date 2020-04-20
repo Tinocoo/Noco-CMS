@@ -3,15 +3,18 @@ from wtforms.fields import SelectField
 from .CKTextArea import CKTextAreaField
 
 
-class PostView(ModelView):
+class FaqsView(ModelView):
     
     extra_js = ['//cdn.ckeditor.com/4.6.0/standard/ckeditor.js']
-
-    # Edição através da grid
+    
     column_editable_list = ['title']
 
-    # Colunas excluídas da grid
-    column_exclude_list = ['description']
+    column_exclude_list = [
+        'body',
+        'img_url',
+        'button_text',
+        'button_link',
+    ]
 
     # Campos da grid utilizado para pesquisa
     column_searchable_list = [
@@ -25,7 +28,7 @@ class PostView(ModelView):
             (1, 'Habilitado'),
         ]
     }
-
+    
     # Campos utilizados para filtros avançados
     column_filters = [
         'title',
@@ -34,31 +37,38 @@ class PostView(ModelView):
 
     column_labels = {
         'title': 'Titulo',
+        'url_img': 'Imagem',
         'created_at': 'Criação',
         'updated_at': 'Atualização'
+    }
+
+    column_formatters = {
+        'created_at': lambda v, c, m, p: m.created_at.strftime('%d/%m/%Y %H:%M:%S'),
+        'updated_at': lambda v, c, m, p: m.created_at.strftime('%d/%m/%Y %H:%M:%S')
     }
 
     # Campos que serão apresentados na tela de cadastro
     form_create_rules = [
         'title',
-        'thumbnail',
-        'description',
-        'categories',
+        'url_img',
+        'body',
+        'button_text',
+        'button_link'
     ]
-
+    
     # Campos que serão apresentados na tela de edição
     form_edit_rules = [
         'title',
-        'thumbnail',
-        'description',
-        'categories',
+        'url_img',
+        'body',
+        'button_text',
+        'button_link',
         'status'
     ]
 
-
     form_overrides = {
-        'description': CKTextAreaField,
-        'status': SelectField
+        'status': SelectField,
+        'body': CKTextAreaField
     }
 
     form_args = {
@@ -70,3 +80,4 @@ class PostView(ModelView):
             coerce=int
         )
     }
+    
