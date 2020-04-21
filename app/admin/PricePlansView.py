@@ -1,26 +1,27 @@
 from flask_admin.contrib.sqla import ModelView
-from flask_admin.form import ImageUploadField
 from wtforms.fields import SelectField
-from .Formatters import Formatters
+from .CKTextArea import CKTextAreaField
 
 
-
-class SlideshowView(ModelView):
-
-    formatters = Formatters()
+class PricePlansView(ModelView):
     
-    column_editable_list = ['name']
+    extra_js = ['//cdn.ckeditor.com/4.6.0/standard/ckeditor.js']
 
+    # Edição através da grid
+    column_editable_list = ['title']
+
+    # Colunas excluídas da grid
     column_exclude_list = [
-        'title',
-        'subtitle',
+        'body',
+        'price',
+        'url_img',
         'button_text',
-        'button_link',
+        'button_link'
     ]
 
     # Campos da grid utilizado para pesquisa
     column_searchable_list = [
-        'name'
+        'title'
     ]
 
     # Substiuição de texto da grid
@@ -30,48 +31,49 @@ class SlideshowView(ModelView):
             (1, 'Habilitado'),
         ]
     }
-    
+
     # Campos utilizados para filtros avançados
     column_filters = [
-        'name',
-        'created_at'
+        'title',
+        'created_at',
+        'price'
     ]
 
     column_labels = {
-        'name': 'Nome',
+        'title': 'Titulo',
+        'body': 'Conteúdo',
         'url_img': 'Imagem',
+        'price': 'Preço',
+        'button_text': 'Texto Botão',
+        'button_link': 'Link Botão',
         'created_at': 'Criação',
         'updated_at': 'Atualização'
     }
 
-    column_formatters = {
-        'created_at': formatters._date_format_br,
-        'updated_at': formatters._date_format_br,
-        'url_img': formatters._list_thumbnail
-    }
-
     # Campos que serão apresentados na tela de cadastro
     form_create_rules = [
-        'name',
-        'url_img',
         'title',
-        'subtitle',
+        'url_img',
+        'body',
+        'price',
         'button_text',
         'button_link'
     ]
-    
+
     # Campos que serão apresentados na tela de edição
     form_edit_rules = [
-        'name',
-        'url_img',
         'title',
-        'subtitle',
+        'url_img',
+        'body',
+        'price',
         'button_text',
         'button_link',
         'status'
     ]
 
+
     form_overrides = {
+        'body': CKTextAreaField,
         'status': SelectField
     }
 
@@ -84,4 +86,3 @@ class SlideshowView(ModelView):
             coerce=int
         )
     }
-    

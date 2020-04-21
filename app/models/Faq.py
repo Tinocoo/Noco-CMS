@@ -1,3 +1,4 @@
+from flask import Markup
 from datetime import datetime
 from sqlalchemy.inspection import inspect
 from sqlalchemy.schema import Column
@@ -23,4 +24,14 @@ class Faq(db.Model):
 
     @property
     def serialize(self):
-        return {c: getattr(self, c) for c in inspect(self).attrs.keys()}
+        return {
+            'id': self.id,
+            'title': self.title,
+            'url_img': self.url_img,
+            'body': Markup(self.body),
+            'button_text': self.button_text,
+            'button_link': self.button_link,
+            'created_at': self.created_at,
+            'updated_at': self.updated_at,
+            'status': self.status
+        }
